@@ -152,7 +152,7 @@ void Flock::cohere(int i)
 /*
 Draws the flock of boids to the screen
 */
-void Flock::drawFlock(const Renderer& renderer, const Shader& shader)
+void Flock::drawFlock(const Shader& shader)
 {
 	for(int i=0; i<size; i++)
 	{
@@ -161,6 +161,6 @@ void Flock::drawFlock(const Renderer& renderer, const Shader& shader)
 		model = glm::rotate(model, flock[i].getAngle(), glm::vec3(0.0f, 0.0f, 1.0f));
 		shader.setUniformMat4("u_model", model);
 		shader.setUniform4f("u_color", 1.0f, 1.0f, 1.0f, 1.0f);
-		renderer.draw(va, ib, shader);
+		Renderer::draw(va, ib, shader);
 	}
 }

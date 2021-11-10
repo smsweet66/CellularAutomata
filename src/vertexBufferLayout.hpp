@@ -25,6 +25,9 @@ struct VertexBufferElement
 	}
 };
 
+template<typename T>
+struct identity { typedef T type; };
+
 class VertexBufferLayout
 {
 public:
@@ -33,28 +36,8 @@ public:
 
 	template <typename T>
 	void push(unsigned int count, GLboolean normalized)
-	{ static_assert(false); }
+	{ push(count, normalized, identity<T>()); }
 
-	template <>
-	void push<float>(unsigned int count, GLboolean normalized)
-	{ 
-		elements.push_back({GL_FLOAT, count, normalized});
-		stride += VertexBufferElement::getSizeOfType(GL_FLOAT) * count;
-	}
-
-	template <>
-	void push<unsigned int>(unsigned int count, GLboolean normalized)
-	{ 
-		elements.push_back({GL_UNSIGNED_INT, count, normalized});
-		stride += VertexBufferElement::getSizeOfType(GL_UNSIGNED_INT) * count;
-	}
-
-	template <>
-	void push<unsigned char>(unsigned int count, GLboolean normalized)
-	{
-		elements.push_back({GL_UNSIGNED_BYTE, count, normalized});
-		stride += VertexBufferElement::getSizeOfType(GL_UNSIGNED_BYTE) * count;
-	}
 
 	unsigned int getStride() const
 	{ return stride; }
@@ -65,4 +48,26 @@ public:
 private:
 	unsigned int stride;
 	std::vector<VertexBufferElement> elements;
+
+	template <typename T>
+	void push(unsigned int count, GLboolean normalized, identity<T>)
+	{ std::cout << "Invalid type!" << std::endl; }
+
+	void push(unsigned int count, GLboolean normalized, identity<float>)
+	{
+		elements.push_back({GL_FLOAT, count, normalized});
+		stride += VertexBufferElement::getSizeOfType(GL_FLOAT) * count;
+	}
+
+	void push(unsigned int count, GLboolean normalized, identity<unsigned int>)
+	{
+		elements.push_back({GL_UNSIGNED_INT, count, normalized});
+		stride += VertexBufferElement::getSizeOfType(GL_UNSIGNED_INT) * count;
+	}
+
+	void push(unsigned int count, GLboolean normalized, identity<unsigned char>)
+	{
+		elements.push_back({GL_UNSIGNED_BYTE, count, normalized});
+		stride += VertexBufferElement::getSizeOfType(GL_UNSIGNED_BYTE) * count;
+	}
 };

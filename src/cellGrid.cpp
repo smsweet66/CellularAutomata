@@ -57,7 +57,7 @@ void CellGrid::updateGrid()
 		living[i] = livingBuffer[i];
 }
 
-void CellGrid::drawGrid(const Renderer& renderer, const Shader& shader)
+void CellGrid::drawGrid(const Shader& shader)
 {
 	for(unsigned int i = 0; i < rows; i++)
 	{
@@ -72,7 +72,7 @@ void CellGrid::drawGrid(const Renderer& renderer, const Shader& shader)
 				int color = (int)(glfwGetTime() * 16) % 256;
 				shader.setUniform4f("u_color", positions[0] + xPos, positions[1] + yPos, -color / 255.0f, 1.0f);
 				shader.setUniformMat4("u_model", model);
-				renderer.draw(va, ib, shader);
+				Renderer::draw(va, ib, shader);
 			}
 		}
 	}

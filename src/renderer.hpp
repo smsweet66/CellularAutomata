@@ -1,7 +1,6 @@
 #include "pch.hpp"
 
-class Renderer
+namespace Renderer
 {
-public:
-	void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+	void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader);
 };

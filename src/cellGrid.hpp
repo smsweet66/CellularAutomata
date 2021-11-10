@@ -23,5 +23,5 @@ public:
 
 	void updateGrid();
 
-	void drawGrid(const Renderer& renderer, const Shader& shader);
+	void drawGrid(const Shader& shader);
 };

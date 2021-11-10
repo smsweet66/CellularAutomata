@@ -72,11 +72,9 @@ unsigned int Shader::compileShader(unsigned int type, const std::string& source)
 		char* message = new char[length];
 		glGetShaderInfoLog(id, length, &length, message);
 
-		#ifdef DEBUG
 		std::cout << "Failed to compile ";
 		std::cout << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader" << std::endl;
 		std::cout << message << std::endl;
-		#endif
 
 		glDeleteShader(id);
 		delete[] message;
@@ -106,6 +104,12 @@ unsigned int Shader::createShader(const std::string& vertexShader, const std::st
 	return program;
 }
 
+void Shader::setUniform1i(const std::string& name, int value) const
+{ glUniform1i(getUniformLocation(name), value); }
+
+void Shader::setUniform3f(const std::string& name, float v1, float v2, float v3) const
+{ glUniform3f(getUniformLocation(name), v1, v2, v3); }
+
 void Shader::setUniform4f(const std::string& name, float v1, float v2, float v3, float v4) const
 { glUniform4f(getUniformLocation(name), v1, v2, v3, v4); }
 
@@ -119,10 +123,8 @@ unsigned int Shader::getUniformLocation(const std::string& name) const
 
 	int location = glGetUniformLocation(ID, name.c_str());
 
-	#ifdef DEBUG
 	if(location == -1)
 		std::cout << "Shader variable: " << name << " does not exist" << std::endl;
-	#endif
 
 	uniformLocationCache[name] = location;
 	return location;

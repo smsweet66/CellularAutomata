@@ -2,8 +2,6 @@
 
 constexpr float width = 1920, height = 1080;
 
-Renderer renderer;
-
 int main()
 {
 	if(!glfwInit())
@@ -53,7 +51,7 @@ int main()
 		
 		glClear(GL_COLOR_BUFFER_BIT);
 		grid.updateGrid();
-		grid.drawGrid(renderer, shader);
+		grid.drawGrid(shader);
 		//flock.update(hertz);
 		//flock.drawFlock(renderer, shader);
 		glfwSwapBuffers(window);

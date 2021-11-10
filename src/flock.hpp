@@ -9,7 +9,7 @@ public:
 
 	void update(float hz);
 
-	void drawFlock(const Renderer& renderer, const Shader& shader);
+	void drawFlock(const Shader& shader);
 
 private:
 	int size;
